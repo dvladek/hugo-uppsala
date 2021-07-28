@@ -1,0 +1,31 @@
+<div class="pub-item d-flex align-items-center border-bottom pb-3 mb-3">
+  <div class="pub-icon flex-shrink-0 text-center mx-3">
+    {{ partial "fmt_pubs/pub-icon" . | chomp }}
+  </div>
+
+  <div class="pub-details flex-grow-1 ms-2">
+    <h3>{{ .Title }}</h3>
+
+    {{ if and (gt .Params.author 1) (eq .Params.pubstate "inpreparation") }}
+    <div class="authors">
+      {{ partial "fmt_pubs/pub-authors" . | chomp }}
+    </div>
+    {{ else if ne .Params.pubstate "inpreparation" }}
+    <div class="authors">
+      {{ partial "fmt_pubs/pub-authors" . | chomp }}
+    </div>
+    {{ end }}
+
+    {{ if ne .Params.pubstate "inpreparation" }}
+    <div class="venue">
+      {{ partial "fmt_pubs/pub-venue" . | chomp }}
+    </div>
+
+    <div class="resources">
+      {{ .Scratch.Set "is_abstract" true }}
+      {{ partial "fmt_pubs/pub-resources" . | chomp }}
+    </div>
+    {{ end }}
+  </div>
+  
+</div>

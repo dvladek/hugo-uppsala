@@ -1,0 +1,9 @@
+{{ $type := .Params.tooltype }}
+
+{{ if eq $type "software" }}
+<i class="bi bi-code-slash"></i>
+{{ else if eq $type "dataset" }}
+<i class="bi bi-server"></i>
+{{ else }}
+<i class="bi bi-hammer"></i>
+{{ end }}

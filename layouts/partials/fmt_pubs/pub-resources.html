@@ -1,0 +1,43 @@
+{{ if .Params.doi }}
+<a href="https://dx.doi.org/{{ .Params.doi }}" target="_blank" class="ext-link"><i class="bi bi-box-arrow-up-right"></i>DOI</a>
+{{ end }}
+
+{{ if .Params.diva }}
+<a href="http://uu.diva-portal.org/smash/record.jsf?pid={{ .Params.diva }}" target="_blank" class="ext-link"><i class="bi bi-box-arrow-up-right"></i>DiVA</a>
+{{ end }}
+
+{{ range .Params.file }}
+    {{ if eq .type "PDF" }}
+<a href="{{.Site.BaseURL}}/files/pubs/{{ lower .file }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i>PDF</a>
+    {{ else if eq .type "ARXIV" }}
+<a href="{{ .file }}" target="_blank" class="ext-link"><i class="bi bi-box-arrow-up-right"></i>PDF</a>
+    {{ end }}
+{{ end }}
+
+{{ if and (eq (.Scratch.Get "is_abstract") true) (gt (len .Content) 0) }}
+<a href="{{ .RelPermalink }}"><i class="bi bi-box-arrow-up-right"></i>Abstract</a>
+{{ end }}
+
+{{ if .Params.bib }}
+<a href="{{.Site.BaseURL}}/files/bib/{{ lower .Params.bib }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i>BibTex</a>
+{{ end }}
+
+{{ if .Params.repository }}
+<a href="{{ .Params.repository }}" target="_blank" class="ext-link"><i class="bi bi-server"></i>Repository</a>
+{{ end }}
+
+{{ if .Params.data }}
+    {{ if in .Params.data "http" }}
+<a href="{{ .Params.data }}" target="_blank" class="ext-link"><i class="bi bi-server"></i>Data</a>
+    {{ else }}
+<a href="{{.Site.BaseURL}}/files/pubs/{{ lower .Params.data }}" target="_blank"><i class="bi bi-server"></i>Data</a>
+    {{ end }}
+{{ end }}
+
+{{ if .Params.code }}
+    {{ if in .Params.code "http" }}
+<a href="{{ .Params.code }}" target="_blank" class="ext-link"><i class="bi bi-code-slash"></i>Code</a>
+    {{ else }}
+<a href="{{.Site.BaseURL}}/files/pubs/{{ lower .Params.code }}" target="_blank"><i class="bi bi-code-slash"></i>Code</a>
+    {{ end }}
+{{ end }}

@@ -1,0 +1,8 @@
+{{ $tagsLen := len .Params.tags }}
+
+<li class="list-unstyled">
+  <i class="bi bi-tags-fill"></i>
+  {{ range $k, $v := .Params.tags }}
+    {{ $v }}{{ if lt $k (sub $tagsLen 1) }}, {{ end }}
+  {{ end }}
+</li>

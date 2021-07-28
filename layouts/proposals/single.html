@@ -1,0 +1,28 @@
+{{ define "main" }}
+
+<main class="container">
+  <article class="post-item row gx-5">
+    <header class="post-header col-12 col-lg-8 offset-lg-4">
+      <h2>{{ .Params.genre }}: {{ .Title }}</h2>
+    </header>
+
+    <aside class="col-12 col-lg-4 pr-5 pb-2 lh-lg">
+      <div class="citation flex-grow-1 mb-3">
+        <p>
+        {{ partial "fmt_research/proposal-icon" . }}
+        {{ partial "fmt_research/proposal-citation" . | chomp }}
+        </p>
+        {{ if .Params.Requirements }}
+        <p><b>Note:</b> {{ .Params.requirements }}</p>
+        {{ end }}
+    </aside>
+
+    <div class="col-12 col-lg-8">
+      <div>
+        {{ .Content | safeHTML }}
+      </div>
+    </div>
+
+  </article>
+</main>
+{{ end }}

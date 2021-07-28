@@ -1,0 +1,25 @@
+<div class="course-item d-flex align-items-center border-bottom pb-3 mb-3">
+  <div class="course-icon flex-shrink-0 text-center mx-3">
+    {{ partial "fmt_teaching/course-icon" . | chomp }}
+  </div>
+
+  <div class="course-details flex-grow-1 ms-2">
+    <h3>
+      {{ printf "%s - %s" .Params.code .Title }} <span class="text-muted">({{ .Params.Period }})</span>
+      {{ if isset .Params "link" }}
+        <a href="{{ .Params.link }}" target="_blank" class="ext-link ps-1"><i class="bi bi-box-arrow-up-right"></i></a>
+      {{ end }}
+    </h3>
+
+    <div class="venue">
+      <b>{{ .Params.level }} level,</b> {{ .Params.credits }} credits. <b>{{ .Params.place }}.</b>
+    </div>
+
+    {{ if isset .Params "previous_periods" }}
+    <div class="course-periods">
+      {{ partial "fmt_teaching/course-periods" . | chomp }}
+    </div>
+    {{ end }}
+  </div>
+
+</div>

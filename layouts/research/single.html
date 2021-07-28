@@ -1,0 +1,29 @@
+{{ define "main" }}
+
+{{ $pubs := where (where .Site.RegularPages "Section" "pubs") "Params.project" "intersect" (slice .Params.id) }}
+<main class="container">
+  <article class="post-item row gx-5">
+    <header class="post-header col-12 col-lg-8 offset-lg-4">
+      <h2>{{ .Title }}</h2>
+    </header>
+
+    <aside class="col-12 col-lg-4 pr-5 pb-2 lh-lg">
+      {{ if .Params.id }}
+      {{ range $pubs }}
+      <div class="citation flex-grow-1 mb-3">
+        {{ partial "fmt_pubs/pub-icon" . }}
+        {{ partial "fmt_pubs/pub-citation" . | chomp }}
+      </div>
+      {{ end }}
+      {{ end }}
+    </aside>
+
+    <div class="col-12 col-lg-8">
+      <div>
+        {{ .Content | safeHTML }}
+      </div>
+    </div>
+
+  </article>
+</main>
+{{ end }}

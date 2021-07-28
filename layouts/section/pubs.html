@@ -1,0 +1,54 @@
+{{ define "main" }}
+
+{{ $workingPubs := where .Pages ".Params.pubstate" "inpreparation" }}
+{{ $actualPubs := where .Pages ".Params.pubstate" "ne" "inpreparation" }}
+{{ $journalPubs := $actualPubs | intersect (where .Pages ".Params.pubtype" "article-journal") }}
+{{ $conferencePubs := $actualPubs | intersect (where .Pages ".Params.pubtype" "paper-conference") }}
+{{ $conferenceShorts := $actualPubs | intersect (where .Pages ".Params.pubtype" "in" (slice "poster-conference" "demo-conference")) }}
+{{ $conferenceAbstracts := $actualPubs | intersect (where .Pages ".Params.pubtype" "abstract-conference") }}
+{{ $sunbeltAbstracts := $actualPubs | intersect (where .Pages ".Params.pubtype" "abstract-sunbelt") }}
+{{ $books := $actualPubs | intersect (where .Pages ".Params.pubtype" "in" (slice "book" "chapter")) }}
+{{ $theses := $actualPubs | intersect (where .Pages ".Params.pubtype" "thesis") }}
+
+{{ $pubsGroup := slice
+    (dict "title" "Journals" "pubs" $journalPubs)
+    (dict "title" "Conferences" "pubs" $conferencePubs)
+    (dict "title" "Books and chapters" "pubs" $books)
+    (dict "title" "Workshops, demos, posters" "pubs" $conferenceShorts)
+    (dict "title" "Abstracts" "pubs" $conferenceAbstracts)
+    (dict "title" "Presentations at International Sunbelt Social Network Conference" "pubs" $sunbeltAbstracts)
+    (dict "title" "Theses" "pubs" $theses) }}
+
+<main class="container">
+  <div class="row">
+    {{ if gt $workingPubs 0 }}
+    <section class="col-12 pubs-wrapper">
+      <header>
+        <h3>Working papers</h3>
+      </header>
+      <ul class="list-unstyled">
+      {{ range $workingPubs }}
+        <li>{{ partial "pub-summary" . | chomp }}</li>
+      {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+
+    {{ range $pubsGroup }}
+    {{ if gt .pubs 0 }}
+    <section class="col-12 pubs-wrapper mt-4">
+      <header>
+        <h3>{{ .title }}</h3>
+      </header>
+      <ul class="list-unstyled">
+      {{ range .pubs }}
+        <li>{{ partial "pub-summary" . | chomp }}</li>
+      {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+    {{ end }}
+    
+  </div>
+</main>
+{{ end }}

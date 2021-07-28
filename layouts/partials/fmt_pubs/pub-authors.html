@@ -1,0 +1,30 @@
+{{ $authorPubsName := printf "%s %s" .Site.Params.authorPubsGivenName .Site.Params.authorPubsFamilyName }}
+{{ $collaborators := where
+  (where .Params.author "first" "ne" .Site.Params.authorPubsGivenName)
+  "last" "ne" .Site.Params.authorPubsGivenName }}
+{{ $numAuthors := len .Params.author }}
+{{ $numCollaborators := len $collaborators }}
+
+{{ if eq .Params.pubstate "inpreparation" }}
+  with
+  {{ range $index, $name := sort $collaborators "last" }}
+    {{ if lt (add $index 1) (sub $numCollaborators 1) }}
+      {{ partial "fmt_pubs/pub-author-link" . | chomp }},
+    {{ else if lt (add $index 1) $numCollaborators }}
+      {{ partial "fmt_pubs/pub-author-link" . | chomp }} and
+    {{ else}}
+      {{ partial "fmt_pubs/pub-author-link" . | chomp }}
+    {{ end }}
+  {{ end }}
+
+{{ else }}
+  {{ range $index, $name := .Params.author }}
+    {{ if lt (add $index 1) (sub $numAuthors 1) }}
+      {{ partial "fmt_pubs/pub-author-link" . | chomp }},
+    {{ else if lt (add $index 1) $numAuthors }}
+      {{ partial "fmt_pubs/pub-author-link" . | chomp }} and
+    {{ else}}
+      {{ partial "fmt_pubs/pub-author-link" . | chomp }}
+    {{ end }}
+  {{ end }}
+{{ end }}

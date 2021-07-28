@@ -1,0 +1,7 @@
+{{ define "main" }}
+
+<main class="container">
+    {{ .Scratch.Set "is_listed" false }}
+    {{ partial "post-summary" . | chomp }}
+</main>
+{{ end }}

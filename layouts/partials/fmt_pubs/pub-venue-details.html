@@ -1,0 +1,71 @@
+{{ $type := .Params.pubtype }}
+{{ $event := .Params.event }}
+
+{{ if eq $type "article-journal" }}
+  <b>{{ printf "%s, %s(%s):%s" .Params.journal .Params.volume .Params.issue .Params.pages }}</b>,
+  {{ .Params.publisher }}.
+
+{{ else if eq $type "paper-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ printf "%s (%s)" $event.proceedings_title $eventInitials }}</b>,
+  {{ if .Params.pages }}
+    {{ printf "Pages %s" .Params.pages }},
+  {{ end }}
+  {{ .Params.publisher }}.
+
+{{ else if eq $type "poster-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ printf "%s (%s)" $event.proceedings_title $eventInitials }}</b>,
+  {{ if .Params.pages }}
+    {{ printf "Pages %s" .Params.pages }},
+  {{ end }}
+  {{ .Params.publisher }}.
+
+{{ else if eq $type "demo-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ printf "%s (%s)" $event.proceedings_title $eventInitials }}</b>,
+  {{ if .Params.pages }}
+    {{ printf "Pages %s" .Params.pages }},
+  {{ end }}
+  {{ .Params.publisher }}.
+
+{{ else if eq $type "abstract-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ printf "%s (%s)" $event.proceedings_title $eventInitials }}</b>,
+
+{{ else if eq $type "abstract-sunbelt" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ $event.proceedings_title }}</b>,
+
+{{ else if eq $type "paper-national-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ printf "%s (%s)" $event.proceedings_title $eventInitials }}</b>,
+  {{ if .Params.pages }}
+    {{ printf "Pages %s" .Params.pages }},
+  {{ end }}
+  {{ .Params.publisher }}.
+
+{{ else if eq $type "chapter" }}
+  In <b>{{ .Params.book_title }}</b>, edited by {{ partial "fmt_pubs/pub-editors-short" . | chomp }}
+  {{ if .Params.pages }}
+    {{ printf "Pages %s" .Params.pages }},
+  {{ end }}
+
+  {{ .Params.publisher }}.
+
+{{ else if eq $type "book" }}
+  {{ .Params.publisher }}.
+
+{{ else if eq $type "thesis" }}
+  <b>{{ .Params.genre }}</b>, {{ .Params.publisher }}, {{ .Params.published_place }}.
+{{ end }}
+
+<b>{{ .Params.pubdate.Format "November 2006" }}.</b>
+
+{{ if .Params.doi }}
+  DOI: <a href="https://dx.doi.org/{{ .Params.doi }}" target="_blank" class="ext-link">{{ .Params.doi }}</a>.
+{{ end }}
+
+{{ if .Params.note}}
+<b><span>({{ .Params.note }})</b></span>
+{{ end }}

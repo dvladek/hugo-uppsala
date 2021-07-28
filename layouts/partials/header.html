@@ -1,0 +1,18 @@
+<header class="container d-flex flex-wrap align-items-center justify-content-center pt-3 pb-5 pe-0 ps-lg-3 ps-0">
+  <div class="d-flex align-items-center mb-lg-0 me-lg-auto">
+    <a class="navbar-brand me-0" href="{{ .Site.BaseURL | relURL }}">{{.Site.Title}}</a><br/>
+  </div>
+  
+  <div>
+    <ul id="main-nav" role="navigaion" class="nav col-12 col-lg-auto mb-2 justify-content-center mb-lg-0">
+    {{ $currentPage := . }}
+    {{ range .Site.Menus.main }}
+      <li class="ms-2">
+	    {{ $active := or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}
+      {{ $active = $active | or (eq .Page $currentPage.Title) }}
+	    <a class="nav-link fw-bolder text-uppercase {{ if $active }}active{{ end }} pe-0" href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
+      </li>
+    {{ end }}
+    </ul>
+  </div>
+</header>

@@ -1,0 +1,17 @@
+<div class="pub-item d-flex align-items-center border-bottom pb-3 mb-3">
+  <div class="pub-icon flex-shrink-0 text-center mx-3">
+    {{ partial "fmt_posts/post-icon" . | chomp }}
+  </div>
+
+  <div class="pub-details flex-grow-1 ms-2">
+    <h3>
+        <a class="text-uppercase inv-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </h3>
+
+    <div class="pub-authors mb-1">
+        {{ .Summary }}
+    </div>
+    <div class="venue">
+        Published {{ .Date.Format "Jan, 2006" }}
+    </div>
+</div>

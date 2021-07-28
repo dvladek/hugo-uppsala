@@ -1,0 +1,29 @@
+<article class="research-item row mb-5 gx-5">
+  <header>
+    <h4>{{ .Title }}</h4>
+  </header>
+
+  {{ if .Params.banner }}
+  <div class="col-3">
+    <figure class="figure">
+      <img src="/research/img/{{ .Slug }}/{{ .Params.banner.image }}" class="figure-img img-fluid rounded" />
+      <figcaption class="figure-caption text-end">{{ .Params.banner.caption }}</figcaption>
+    <figure>
+  </div>
+    
+  <div class="research-details col-9">
+  {{ else }}
+  <div class="research-details col-12">
+  {{ end }}
+    <div class="research-description">
+      {{ .Summary }}
+    </div>
+    
+    <div class="links pt-3">
+      {{ partial "fmt_research/research-links" . | chomp }}
+    </div>
+  </div>
+  
+</article>
+
+

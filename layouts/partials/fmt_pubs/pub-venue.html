@@ -1,0 +1,35 @@
+{{ $type := .Params.pubtype }}
+{{ $event := .Params.event }}
+
+{{ if eq $type "article-journal" }}
+  <b>{{ .Params.journal }}</b>, {{ .Params.publisher }}.
+{{ else if eq $type "paper-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ $eventInitials }}</b>, {{ $event.place }}.
+{{ else if eq $type "poster-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ $eventInitials }}</b>, {{ $event.place }}.
+{{ else if eq $type "demo-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ $eventInitials }}</b>, {{ $event.place }}.
+{{ else if eq $type "abstract-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ $eventInitials }}</b>, {{ $event.place }}.
+{{ else if eq $type "abstract-sunbelt" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  {{ $event.place }}.
+{{ else if eq $type "paper-national-conference" }}
+  {{ $eventInitials := index (split $event.short_title " ") 0 }}
+  <b>{{ $eventInitials }}</b>, {{ $event.place }}.
+{{ else if eq $type "chapter" }}
+  In <b>{{ .Params.book_title }}</b>, {{ .Params.publisher }}.
+{{ else if eq $type "book" }}
+  {{ .Params.publisher }}.
+{{ else if eq $type "thesis" }}
+  <b>{{ .Params.genre }}</b>, {{ .Params.publisher }}, {{ .Params.published_place }}.
+{{ end }}
+
+<b>{{ .Params.pubdate.Format "2006" }}</b>
+{{ if .Params.note}}
+<b><span>({{ .Params.note }})</b></span>
+{{ end }}

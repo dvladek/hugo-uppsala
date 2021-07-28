@@ -1,0 +1,29 @@
+{{ $type := .Params.pubtype }}
+
+{{ if eq $type "article-journal" }}
+<i class="bi bi-file-text"></i>
+{{ else if eq $type "paper-conference" }}
+<i class="bi bi-file-earmark-text"></i>
+{{ else if eq $type "poster-conference" }}
+<i class="bi bi-file-earmark-ppt"></i>
+{{ else if eq $type "demo-conference" }}
+<i class="bi bi-file-earmark-play"></i>
+{{ else if eq $type "abstract-conference" }}
+<i class="bi bi-file-earmark-text"></i>
+{{ else if eq $type "abstract-sunbelt" }}
+<i class="bi bi-file-earmark-text"></i>
+{{ else if eq $type "paper-national-conference" }}
+<i class="bi bi-file-earmark-text"></i>
+{{ else if eq $type "book" }}
+<i class="bi bi-bookmarks"></i>
+{{ else if eq $type "chapter" }}
+<i class="bi bi-bookmark"></i>
+{{ else if eq $type "thesis" }}
+  {{ if in .Params.Genre "Thesis" }}
+<i class="bi bi-journal-bookmark-fill"></i>
+  {{ else }}
+<i class="bi bi-gear-wide-connected"></i>
+  {{ end }}
+{{ else if eq $type "unpublished" }}
+<i class="bi bi-file-earmark"></i>
+{{ end }}

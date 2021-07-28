@@ -1,0 +1,27 @@
+{{ define "main" }}
+
+<main class="container">
+  <article class="post-item row gx-5">
+    <header class="post-header col-12 col-lg-8 offset-lg-4">
+      <h2>{{ .Params.code }} - {{ .Title }}</h2>
+    </header>
+
+    <aside class="col-12 col-lg-4 pr-5 pb-2 lh-lg">
+      <div class="citation flex-grow-1">
+        {{ partial "fmt_teaching/course-icon" . }}
+        {{ partial "fmt_teaching/course-citation" . | chomp }}
+        {{ if isset .Params "previous_periods" }}
+        <p>{{ partial "fmt_teaching/course-periods" . | chomp }}.</p>
+        {{ end }}
+      </div>
+    </aside>
+
+    <div class="col-12 col-lg-8">
+      <div>
+        {{ .Content | safeHTML }}
+      </div>
+    </div>
+
+    </article>
+</main>
+{{ end }}

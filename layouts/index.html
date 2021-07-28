@@ -1,0 +1,126 @@
+{{ define "main" }}
+{{ $authorPortrait := .Site.Params.authorPortrait | default "portrait.png" }}
+{{ $numHomeNews := .Site.Params.numHomeNews | default 5 }}
+{{ $limHomePosts := .Site.Params.limHomePosts | default 2 }}
+{{ if le $limHomePosts 0 }}
+  {{ .Scratch.Set "limHomePosts" 0 }}
+{{ end }}
+
+{{ if le $numHomeNews 0 }}
+  {{ .Scratch.Set "numHomeNews" 0 }}
+{{ else }}
+  {{ .Scratch.Set "numHomeNews" $numHomeNews }}
+  {{ .Scratch.Set "news" (where .Site.RegularPages.ByDate "Section" "news") }}
+{{ end }}
+
+{{ if and (gt $numHomeNews 0) (gt $limHomePosts 0) }}
+  {{ .Scratch.Set "posts" (first $limHomePosts (where .Site.RegularPages.ByWeight.ByDate "Section" "posts")) }}
+{{ end }}
+
+{{ $workingPubs := where (where .Site.RegularPages "Section" "pubs") ".Params.pubstate" "inpreparation" }}
+
+<main class="container">
+  <div class="row">
+    <section id="about" class="row col-lg-8 mb-3">
+      <div class="row">
+        <header class="col-sm-3 p-4">
+          <figure class="figure text-center">
+            <img src="/img/{{ $authorPortrait }}" class="figure-img img-fluid rounded" alt="{{ .Site.Params.authorName }}" />
+          </figure>
+
+          <h2>{{ .Site.Params.authorName }}</h2>
+          <h3>{{ .Site.Params.academicPosition }}</h3>
+          <p>{{ .Site.Params.academicDepartment }}</p>
+          <p>{{ .Site.Params.academicInstitution }}</p>
+
+          <br/>
+
+          <p class="fw-normal">
+            <a href="mailto:{{ .Site.Params.email }}" class="ext-link">{{ .Site.Params.email }}</a>
+          </p>
+          {{ range .Site.Params.address }}
+          <p>{{ . | safeHTML -}}</p>
+          {{ end }}
+
+          {{ range $k, $v := sort .Site.Params.social "priority" }}
+          <li class="list-inline-item">
+            <a href="{{ .link }}" target="_blank" class="social-link">
+                <i class="bi bi-{{ .icon }}"></i>
+            </a>
+          </li>
+          {{ end }}
+        </header>
+
+        <div class="col-sm-9">
+          {{ partial "site_templates/about_me.html" }}
+        </div>
+    </section>
+
+    <aside id="news" class="col-lg-4 p-4 mb-3 bg-light">
+      <header>
+        <h3>New and Newsworthy</h3>
+      </header>
+
+      {{ if gt (.Scratch.Get "news") 0 }}
+      <ol class="list-unstyled">
+        {{ range first (.Scratch.Get "numHomeNews") (sort (sort (union (.Scratch.Get "news") (.Scratch.Get "posts")) "Weight") "Date" "desc") }}
+        <li>
+          {{ if eq .Type "posts" }}
+          <i class="bi bi-vector-pen pe-1"></i>
+          <span class="text-uppercase fw-normal">{{ .Date.Format "Jan 2006" }}.</span>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{ else }}
+          <i class="bi bi-caret-right-fill pe-1"></i>
+          <span class="text-uppercase fw-normal">{{ .Date.Format "Jan 2006" }}.</span>
+
+          {{ if .Params.publication }}
+            {{ $url := where (where .Site.RegularPages "Section" "pubs") "Params.id" .Params.publication | first 1 }}
+            {{ with index $url 0  }}
+            <a href="{{ .RelPermalink }}">
+            {{ end }}
+          {{ else if .Params.project }}
+            {{ $url := where (where .Site.RegularPages "Section" "research") "Params.id" .Params.project | first 1 }}
+            {{ with index $url 0  }}
+            <a href="{{ .RelPermalink }}">
+            {{ end }}
+          {{ end }}
+
+          {{ if .Params.headline }}
+            {{ .Params.headline }}
+          {{ else }}
+            {{ .Title }}
+          {{ end }}
+
+          {{ if .Params.publication | or .Params.project }}
+            </a>
+          {{ end }}
+
+          {{ if isset .Params "external_link" }}
+            <a href="{{ .Params.external_link }}" target="_blank" class="ext-link ps-1"><i class="bi bi-box-arrow-up-right"></i></a>
+          {{ end }}
+        {{ end }}
+        </li>
+        {{ end }}
+      </ol>
+      {{ end }}
+
+    </aside>
+  </div>
+
+  {{ if gt $workingPubs 0 }}
+  <div class="row">
+    <section class="col-12">
+      <header>
+        <h3>Working papers</h3>
+      </header>
+      <ul class="list-unstyled">
+      {{ range where (where .Site.RegularPages "Section" "pubs") "Params.pubstate" "eq" "inpreparation" }}
+        <li>{{ partial "pub-summary" . | chomp }}</li>
+      {{ end }}
+      </ul>
+    </section>
+  </div>
+  {{ end }}
+
+</main>
+{{ end }}

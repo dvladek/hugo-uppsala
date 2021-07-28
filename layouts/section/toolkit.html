@@ -1,0 +1,24 @@
+{{ define "main" }}
+
+<main class="container">
+  <div class="row">
+    <section class="col-12">
+      {{ partial "site_templates/resources_overview.html" }}
+    </section>
+
+    {{ if gt .Pages 0 }}
+    <section class="col-12 toolkit-wrapper">
+      <header>
+        <h3>Software and datasets</h3>
+      </header>
+      <ul class="list-unstyled">
+      {{ range .Pages }}
+        <li>{{ partial "tool-summary" . | chomp }}</li>
+      {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+
+  </div>
+</main>
+{{ end }}

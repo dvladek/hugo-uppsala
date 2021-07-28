@@ -1,0 +1,53 @@
+{{ define "main" }}
+
+{{ $courses := where .Pages.ByWeight "Type" "courses" }}
+{{ $proposals := where (where .Pages.ByWeight.ByDate "Type" "proposals") "Params.assigned" false }}
+{{ $projects := where .Pages.ByWeight.ByDate "Type" "pubs" }}
+
+<main class="container">
+  <div class="row">
+    <section class="col-12">
+      {{ partial "site_templates/education_overview.html" }}
+    </section>
+
+    {{ if gt $proposals 0 }}
+    <section class="col-12 proposals-wrapper mt-4">
+      <header>
+        <h3>Available Projects</h3>
+      </header>
+
+      {{ range $proposals }}
+        {{ partial "proposal-summary" . | chomp }}
+      {{ end }}
+    </section>
+    {{ end }}
+
+    {{ if gt $courses 0 }}
+    <section class="col-12 courses-wrapper mt-4">
+      <header>
+        <h3>Courses</h3>
+      </header>
+
+      <ul class="list-unstyled">
+      {{ range $courses }}
+        <li>{{ partial "course-summary" . | chomp }}</li>
+      {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+
+    {{ if gt $projects 0 }}
+    <section class="col-12 mt-4">
+      <header>
+        <h3 class="fw-light pb-1">Supervised Projects</h3>
+      </header>
+
+      {{ range sort $projects ".Params.pubdate" "desc" }}
+        {{ partial "pub-summary" . | chomp }}
+      {{ end }}
+    </section>
+    {{ end }}
+
+  </div>
+</main>
+{{ end }}

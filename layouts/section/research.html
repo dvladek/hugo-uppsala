@@ -1,0 +1,22 @@
+{{ define "main" }}
+<main class="container">
+  <div class="row">
+    <section class="col-12">
+      {{ partial "site_templates/research_overview.html" }}
+    </section>
+
+    {{ if gt .Pages 0 }}
+    <section class="col-12 projects-wrapper mt-4">
+      <header>
+        <h3>Selected projects</h3>
+      </header>
+
+      {{ range .Pages }}
+        {{ partial "research-summary" . | chomp }}
+      {{ end}}
+    </section>
+    {{ end }}
+    
+  </div>
+</main>
+{{ end }}

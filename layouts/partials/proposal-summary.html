@@ -1,0 +1,16 @@
+<article class="research-item row mb-5 gx-5">
+  <header>
+    <h4>{{ printf "%s: %s" .Params.genre .Title }}</h4>
+  </header>
+
+  <div class="research-details col-12">
+    <div class="research-description">
+      {{ .Summary }}
+    </div>
+    
+    <div class="links">
+        {{ partial "fmt_research/research-links" . | chomp }}
+    </div>
+  </div>
+  
+</article>

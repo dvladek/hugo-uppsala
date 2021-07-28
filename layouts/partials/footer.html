@@ -1,0 +1,12 @@
+<footer id="footer" class="mt-auto mb-2">
+  <section class="container text-end">
+    Powered by <a href="https://gohugo.io">Hugo</a> using the
+    <a href="https://github.com/dvladek/hugo-uppsala">hugo-Uppsala</a> theme.
+    &nbsp; &copy; {{ .Site.Params.authorName }} 2021 {{ if gt now.Year 2021 }}&ndash;{{ now.Format "2006" }}{{ end }}.
+
+    {{- if isset .Site.Params "repository" }}
+      &nbsp; <a href="{{ .Site.Params.repository | safeURL }}" target="_blank"><i class="bi bi-github"></i>Source</a>
+    {{- end }}
+
+  </section>
+</footer>

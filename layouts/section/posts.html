@@ -1,0 +1,15 @@
+{{ define "main" }}
+<main class="container">
+  <section class="posts-wrapper">
+  {{ range .Paginator.Pages.ByDate.Reverse }}
+    {{ .Scratch.Set "is_listed" true }}
+    {{ partial "post-summary" . | chomp }}
+  {{ end }}
+  </section>
+  
+  <section class="posts-paginator position-relative top-0 start-50 pb-3">
+    {{ template "_internal/pagination.html" . }}
+  </section>
+
+</main>
+{{ end }}

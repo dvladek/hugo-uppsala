@@ -1,0 +1,19 @@
+{{ define "main" }}
+
+<main class="container">
+  <div class="row">
+    <section class="col-12 pubs-wrapper mt-4">
+      <header>
+        <h3 class="fw-light pb-1">{{ .Title }}</h3>
+      </header>
+
+      <ul class="list-unstyled">
+      {{ range .Data.Pages }}
+        <li>{{ partial "fmt_posts/post-summary-filtered" . | chomp }}</li>
+      {{ end }}
+      </ul>
+    </section>
+
+  </div>
+</main>
+{{ end }}

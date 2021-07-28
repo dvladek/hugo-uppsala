@@ -1,0 +1,8 @@
+{{ $authorKey := lower (printf "%s-%s" .first .last) }}
+
+{{ if isset site.Data.collaborators $authorKey }}
+  {{ $url := (index site.Data.collaborators $authorKey).url }}
+  <a href="{{ $url }}" target="_blank" alt="{{ printf "%s, %s" .first .last }}" class="inv-ext-link">{{ printf "%s, %s" .family .given }}</a>
+{{ else }}
+  {{ printf "%s, %s" .family .given }}
+{{ end }}

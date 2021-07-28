@@ -1,0 +1,12 @@
+{{ $numPeriods := len .Params.previous_periods }}
+
+Also taught in
+{{ range $index, $period := .Params.previous_periods }}
+  {{ if lt (add $index 1) (sub $numPeriods 1) }}
+    {{ printf "%s," $period }}
+  {{ else if lt (add $index 1) $numPeriods }}
+    {{ printf "%s and" $period }}
+  {{ else}}
+    {{ printf "%s" $period }}
+  {{ end }}
+{{ end }}

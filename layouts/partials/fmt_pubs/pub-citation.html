@@ -1,0 +1,11 @@
+<span class="authors">
+  {{ partial "fmt_pubs/pub-authors-short" . | chomp }}
+</span>
+
+<span class="fw-normal">{{ .Title }}.</span>
+
+{{ if ne .Params.pubstate "inpreparation" }}
+<span class="venue">
+  {{ partial "fmt_pubs/pub-venue-details" . | chomp }}
+</span>
+{{ end }}

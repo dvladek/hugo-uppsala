@@ -1,0 +1,239 @@
+/*
+ * General Navigation
+ */
+
+#main-nav a {
+	letter-spacing: .1em;
+
+	&.active {
+        color: $primary;
+	}
+}
+
+
+/*
+ * Links
+ */
+
+.ext-link {
+    color: $ext-link-color;
+}
+
+.social-link {
+    color: $social-link-color;
+}
+
+a.inv-link {
+    color: $inv-link-color;
+    &:hover {
+        color: $link-hover-color;
+    }
+}
+
+a.inv-ext-link {
+    color: $inv-ext-link-color;
+    &:hover {
+        color: $inv-ext-link-hover-color;
+    }
+}
+
+
+/*
+ * General Layout
+ */
+
+header h3 {
+    font-weight: $font-weight-light;
+    margin-bottom: $spacer !important;
+}
+
+aside {
+    text-align: justify;
+}
+
+
+/*
+ * Home Page
+ */
+
+#about header {
+    line-height: 1;
+
+    h2 {
+        font-size: $font-size-base;
+        font-weight: $font-weight-int-bold;
+    }
+
+    h3 {
+        font-size: $font-size-base;
+    }
+
+    p {
+        font-size: $font-size-sm;
+        margin-bottom: ($spacer * .5) !important;
+
+        &:last-of-type {
+            margin-bottom: $spacer !important;
+        }
+    }
+}
+
+#news {
+    li {
+        font-size: $font-size-sm;
+        margin-bottom: $spacer !important;
+        text-align: justify;
+
+        i {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-extreme;
+        }
+    }
+}
+
+
+/*
+ * Footer
+ */
+
+#footer {
+    font-size: $font-size-sm;
+}
+
+
+/*
+ * Specific pages
+ */
+
+// Mixins
+
+@mixin group-icon($name) {
+  .#{$name}-icon {
+    font-size: $font-size-lg;
+  }
+}
+
+@mixin small-items($fl, $fs) {
+    line-height: $fl;
+    font-size: $fs;
+
+    b {
+        font-weight: $font-weight-normal;
+        color: $grey-contrast;
+    }
+}
+
+@mixin group-details(
+    $name,
+    $fl: $line-height-sm,
+    $fs: $font-size-sm) {
+.#{$name}-details {
+    @include small-items($fl, $fs);
+
+    h3 {
+        font-weight: $font-weight-normal;
+        font-size: inherit;
+        line-height: inherit;
+        margin-bottom: ($spacer * .125) !important;
+    }
+
+    h4 {
+        font-size: $h5-font-size;
+    }
+}}
+
+@mixin link-list($name) {
+.#{$name} {
+    font-size: $font-size-xsm;
+    padding-top: ($spacer * .5) !important;
+
+    a {
+         padding-right: ($spacer * 2) !important;
+    }
+
+    i {
+        font-weight: $font-weight-extreme;
+        margin-right: ($spacer * .65) !important;
+    }
+}}
+
+.venue {
+    font-style: italic;
+
+    span {
+        color: $yellow;
+    }
+}
+
+.citation {
+    @include small-items($line-height-sm, $font-size-xsm)
+}
+
+
+// Publications
+@include group-icon("pub");
+@include group-details("pub");
+@include link-list("resources");
+
+
+// Research and Proposals
+@include group-details("research", "inherit", $font-size-base);
+@include link-list("links");
+
+
+// Courses
+@include group-icon("course");
+@include group-details("course");
+
+
+// Toolkit
+@include group-icon("tool");
+@include group-details("tool");
+
+
+
+/*
+ * Blog
+ */
+
+// Posts
+
+.post-item {
+    .post-title h2 {
+        font-size: $h1-font-size;
+        font-weight: $font-weight-normal;
+    };
+
+    .post-header h2 {
+        font-weight: $font-weight-normal;
+    }
+
+    @for $i from 1 through 6 {
+    h#{$i} {
+        font-weight: $font-weight-light;
+    };
+    };
+}
+
+.posts-paginator {
+    font-size: 0.85rem;
+}
+
+
+// Aside
+
+.post-aside {
+    font-size: $font-size-sm;
+
+    h4 {
+        font-size: $font-size-sm;
+        letter-spacing: .08em;
+    }
+}
+
+@include media-breakpoint-down(lg) {
+  .post-aside ul li {
+      display: inline-block;
+      padding-right: $spacer !important;;
+  }
+}

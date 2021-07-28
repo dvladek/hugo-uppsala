@@ -1,0 +1,19 @@
+<article class="post-item row mb-5">
+  <header class="post-title col-12 col-lg-10 offset-lg-2">
+    <h2>
+      <a class="text-uppercase inv-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </h2>
+  </header>
+
+    <aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg">
+        {{ partial "fmt_posts/post-aside" . | chomp }}
+    </aside>
+
+    <div class="col-12 col-lg-10">
+    {{ if eq (.Scratch.Get "is_listed") true }}
+      {{ .Summary }}
+    {{ else }}
+      {{ .Content }}
+    {{ end }}
+    </div>
+  </article>

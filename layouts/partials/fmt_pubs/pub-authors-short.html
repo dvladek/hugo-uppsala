@@ -1,0 +1,15 @@
+{{ $authors := .Params.author }}
+{{ $numAuthors := .Params.author }}
+
+{{ range $index, $name := .Params.short_author }}
+  {{ $fullName := index $authors $index }}
+  {{ $nameDict := dict
+    "first" $fullName.first "last" $fullName.last
+    "family" $name.family "given" $name.given }}
+
+  {{ if lt (add $index 1) $numAuthors }}
+    {{ partial "fmt_pubs/pub-author-short-link" $nameDict | chomp }},
+  {{ else}}
+    {{ partial "fmt_pubs/pub-author-short-link" $nameDict | chomp }}
+  {{ end }}
+{{ end }}
