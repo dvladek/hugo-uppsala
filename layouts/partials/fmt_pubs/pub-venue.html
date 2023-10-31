@@ -29,7 +29,14 @@
   <b>{{ .Params.genre }}</b>, {{ .Params.publisher }}, {{ .Params.published_place }}.
 {{ end }}
 
+{{ if eq .Params.pubstate "published" }}
 <b>{{ .Params.pubdate.Format "2006" }}</b>
+{{ end }}
+
+{{ if eq .Params.pubstate "forthcoming" }}
+<b>Forthcoming</b>
+{{ end }}
+
 {{ if .Params.note}}
 <b><span>({{ .Params.note }})</b></span>
 {{ end }}
