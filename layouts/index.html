@@ -83,6 +83,11 @@
             {{ with index $url 0  }}
             <a href="{{ .RelPermalink }}">
             {{ end }}
+          {{ else if .Params.course }}
+            {{ $url := where (where .Site.RegularPages "Type" "courses") "Params.id" .Params.course | first 1 }}
+            {{ with index $url 0  }}
+            <a href="{{ .RelPermalink }}">
+            {{ end }}
           {{ end }}
 
           {{ if .Params.headline }}
@@ -91,7 +96,7 @@
             {{ .Title }}
           {{ end }}
 
-          {{ if .Params.publication | or .Params.project }}
+          {{ if .Params.publication | or .Params.project | or .Params.course }}
             </a>
           {{ end }}
 

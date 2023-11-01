@@ -4,7 +4,11 @@
 
 <span class="fw-normal">{{ .Title }}.</span>
 
-{{ if ne .Params.pubstate "inpreparation" }}
+{{ if eq .Params.pubstate "forthcoming"  }}
+<span class="venue">
+  {{ partial "fmt_pubs/pub-venue" . | chomp }}
+</span>
+{{ else if ne .Params.pubstate "inpreparation"  }}
 <span class="venue">
   {{ partial "fmt_pubs/pub-venue-details" . | chomp }}
 </span>
