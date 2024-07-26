@@ -18,6 +18,14 @@
 <a href="{{ .RelPermalink }}"><i class="bi bi-box-arrow-up-right"></i>Abstract</a>
 {{ end }}
 
+{{ range .Params.presentation }}
+    {{ if eq .type "POSTER" }}
+<a href="{{.Site.BaseURL}}/files/pubs/{{ lower .file }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i>Poster</a>
+    {{ else if eq .type "SLIDES" }}
+<a href="{{.Site.BaseURL}}/files/pubs/{{ lower .file }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i>Slides</a>
+    {{ end }}
+{{ end }}
+
 {{ if .Params.bib }}
 <a href="{{.Site.BaseURL}}/files/bib/{{ lower .Params.bib }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i>BibTex</a>
 {{ end }}
