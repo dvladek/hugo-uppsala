@@ -51,7 +51,11 @@
           {{ range $k, $v := sort .Site.Params.social "priority" }}
           <li class="list-inline-item">
             <a href="{{ .link }}" target="_blank" class="social-link">
+                {{ if eq .iconset "academic" }}
+                <i class="ai ai-{{ .icon }}"></i>
+                {{ else }}
                 <i class="bi bi-{{ .icon }}"></i>
+                {{ end }}
             </a>
           </li>
           {{ end }}

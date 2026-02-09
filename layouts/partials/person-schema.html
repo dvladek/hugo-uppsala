@@ -1,0 +1,21 @@
+{{- $sameAs := slice .Site.Params.academicURL -}}
+
+{{- range sort .Site.Params.social "priority" -}}
+  {{- if eq .iconset "academic" -}}
+    {{- $sameAs = $sameAs | append .link -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $person := dict
+  "@context" "https://schema.org"
+  "@type" "Person"
+  "name" .Site.Params.authorName
+  "affiliation" (dict "@type" "Organization" "name" .Site.Params.academicInstitution)
+  "jobTitle" .Site.Params.academicPosition
+  "url" .Site.BaseURL
+  "sameAs" $sameAs
+-}}
+
+<script type="application/ld+json">
+{{- $person | jsonify | safeJS -}}
+</script>
